@@ -5,5 +5,6 @@ LangChain Tutorial
 * yarn ts-node index.ts
 
 ## How to Run:
-pip install -r requirement.txt
-python LangChain.py
+`pip install -r requirement.txt`
+* Need to set your environment variable for OPENAI_API_KEY, like the following: `import os os.environ['OPENAI_API_KEY'] = 'key'`
+`python LangChain.py`

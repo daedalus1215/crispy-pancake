@@ -7,7 +7,7 @@ const messages = [
 
 import { ChatOpenAI } from "@langchain/openai";
 
-const model = new ChatOpenAI({apiKey: `${process.env.OPENAI_API_KEY}`, model: "gpt-4"});
+const model = new ChatOpenAI({apiKey: `${process.env.OPENAI_API_KEY}`, model: "llama3"});
 
 const app = async () => await model.invoke(messages);
 app();
