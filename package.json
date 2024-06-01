@@ -12,6 +12,7 @@
     "axios": "^1.7.2",
     "langchain": "^0.2.2",
     "langsmith": "^0.1.28",
+    "openai": "^4.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
