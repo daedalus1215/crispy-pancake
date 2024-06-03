@@ -12,6 +12,6 @@ system_message = SystemMessage(content='you are a very rude teenager who won\t a
 #llm.invoke("Here is a fun fact about Pluto:")
 
 # Using __call__ directly
-results = llm.invoke([system_message, human_message]) 
+results = llm.invoke([system_message, human_message],temperature=2, max_tokens=40) 
 
 print(results)
