@@ -11,8 +11,7 @@ llm = Ollama(
 
 llm.cache = InMemoryCache()
 
-# Use templates
-single_input = PromptTemplate(input_variables=["topic"], 
-                              template='Tell me a fact about {topic}')
+multi_input_prompt = PromptTemplate(input_variables=['topic', 'level'],
+                                    template='Tell me a fact about {topic} for a {level}')
 
-llm.invoke(single_input.format(topic="Mars"))
+llm.invoke(multi_input_prompt.format(topic='the ocean', level='3rd grade'))
