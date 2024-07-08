@@ -18,7 +18,7 @@ parser = CommaSeparatedListOutputParser()
 
 human_template = "{request}\n{format_instructions}"
 human_prompt = HumanMessagePromptTemplate.from_template(human_template)
-
+system_prompt = SystemMessagePromptTemplate.from_template("You always reply to questions only in datetime patterns. ")
 chat_prompt = ChatPromptTemplate.from_messages([human_prompt])
 
 model_request = chat_prompt.format_prompt(request='write a poem about animals',
@@ -37,8 +37,13 @@ output_parser.get_format_instructions()
 template_text = "{request}\n{format_instructions}"
 human_prompt = HumanMessagePromptTemplate.from_template(template_text)
 
-chat_prompt = ChatPromptTemplate.from_messages([human_prompt])
-print(chat_prompt.format_prompt(request="what date was the 13th amendment ratified in the US?",
-                          format_instructions=output_parser.get_format_instructions()).to_messages())
+chat_prompt = ChatPromptTemplate.from_messages([system_prompt, human_prompt])
+result = chat_prompt.format_prompt(request="what date was the 13th amendment ratified in the US?",
+                          format_instructions=output_parser.get_format_instructions()).to_messages()
 
+
+from langchain.output_parsers import OutputFixingParser
+
+new_parser = OutputFixingParser.from_llm(parser=output_parser, llm=llm)
+new_parser.parse(result)
 
