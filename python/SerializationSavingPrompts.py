@@ -19,4 +19,4 @@ prompt.save("myprompt.json")
 from langchain.prompts import load_prompt
 
 loaded_prompt = load_prompt("myprompt.json")
-print(load_prompt)
+llm.invoke(loaded_prompt.format(planet='mars'))
