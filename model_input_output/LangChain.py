@@ -8,4 +8,4 @@ prompts = ['Please finish this statement: "Here is a fun fact about Pluto:"']
 # Using __call__ directly
 results = llm.invoke(prompts) 
 
-print(results)
+print(results)  
