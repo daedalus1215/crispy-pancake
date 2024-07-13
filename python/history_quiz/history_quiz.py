@@ -54,26 +54,26 @@ class HistoryQuiz:
         correct_datetime = output_parser.parse(result)
         return correct_datetime
     
-    def get_user_answer(self):
+    def get_user_answer(self, question):
         '''
-        //@TODO: we will get the user's input in a traditional way
+       
         '''
-        while True:
-            try:
-                date_str = input("Enter the date (YYYY-MM-DD): ")
-                dt = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-                return dt.date()
-            except ValueError:
-                print("Invalid input. Please try again.")
+        print (question)
+        print('\n')
+        
+        year = int(input("Enter the year: "))
+        month = int(input("Enter the month (1-12):"))
+        day = int(input("Enter the day (1-31): "))
+        
+        user_datetime = datetime.datetime(year, month, day)
+        return user_datetime
     
-    # def check_user_answer(self, user_name, ai_answer):
-    #     '''
-    #     Should check the user answer against the AI answer and return the difference between
-    #     '''
-    #     pass
-    
+    def check_user_answer(self, user_answer, ai_answer):
+        print("The difference between answer and your guess: ", str(user_answer - ai_answer))
     
 
 quiz = HistoryQuiz()
-topic = "Neil Armstrong set foot moon date"
-quiz.get_AI_answer(quiz.create_history_question(topic))
+question = quiz.create_history_question(topic="Neil Armstrong set foot moon date")
+ai_answer = quiz.get_AI_answer(question=question)
+user_answer = quiz.get_user_answer(question=question)
+quiz.check_user_answer(user_answer=user_answer, ai_answer=ai_answer)
