@@ -1,0 +1,19 @@
+{
+  "name": "crispy-pancake",
+  "version": "1.0.0",
+  "description": "LangChain",
+  "main": "index.js",
+  "repository": "https://github.com/daedalus1215/crispy-pancake.git",
+  "author": "daedalus1215 <13687739+daedalus1215@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/openai": "^0.0.33",
+    "@types/node": "^20.12.12",
+    "axios": "^1.7.2",
+    "langchain": "^0.2.2",
+    "langsmith": "^0.1.28",
+    "openai": "^4.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
