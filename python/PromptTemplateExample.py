@@ -11,9 +11,9 @@ llm = Ollama(
 
 llm.cache = InMemoryCache()
 
-## Use templates
-# single_input = PromptTemplate(input_variables=["topic"], 
-#                               template='Tell me a fact about {topic}')
+# Use templates
+single_input = PromptTemplate(input_variables=["topic"], 
+                              template='Tell me a fact about {topic}')
 
 # llm.invoke(single_input.format(topic="Mars"))
 
