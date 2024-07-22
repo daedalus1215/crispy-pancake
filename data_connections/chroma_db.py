@@ -25,10 +25,9 @@ text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=500)
 docs = text_splitter.split_documents(documents)
 
 # docs
-embed_model = LangchainEmbedding(HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2"
-))
+embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-db = Chroma.from_documents(docs, embed_model, persist_directory="./speech_new_db")
+
+db = Chroma.from_documents(docs, embedding_function, persist_directory="./speech_new_db")
 
 db.persist() # tell chroma to save it.
