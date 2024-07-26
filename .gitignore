@@ -3,3 +3,4 @@ node_modules/*
 python/.venv/
 python/env
 .venv
+data_connections/speech_new_db
