@@ -22,7 +22,7 @@ db.persist() # tell chroma to save it.
 # pull it out of the database
 db_new_connection = Chroma(persist_directory="./speech_new_db", embedding_function=embedding_function)
 similar_docs = db_new_connection.similarity_search('What did FDR say about the cost of food law?')
-print(similar_docs[0].page_content)
+# print(similar_docs[0].page_content)
 
 loader = TextLoader("data/lincoln_state_of_union.txt")
 documents = loader.load()
@@ -31,4 +31,10 @@ db_new_connection = Chroma.from_documents(docs, embedding_function, persist_dire
 blocks = db_new_connection.similarity_search('said of the proportion')
 
 # print(blocks[0].page_content)
-print(blocks[0].metadata)
+# print(blocks[0].metadata)
+
+print(db_new_connection)
+
+retriever = db_new_connection.as_retriever()
+results = retriever.get_relevant_documents('cost of food law')
+print(results)
