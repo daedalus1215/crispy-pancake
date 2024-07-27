@@ -4,3 +4,4 @@ python/.venv/
 python/env
 .venv
 data_connections/speech_new_db
+data_connections/some_new_mkultra/*
