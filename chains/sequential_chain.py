@@ -2,24 +2,22 @@ from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate # t
 from langchain.chains import LLMChain, SequentialChain
 from ollama_factory import OllamaFactory
 
-llm = OllamaFactory().create_llm()
-
 # Employee performance review - INPUT TEXT
 # review_text --> LLMChain --> Summary
 # Summary --> LLMChain --> Weaknesses
 
-
+llm = OllamaFactory().create_llm()
 
 chain1 = LLMChain(llm = llm, 
-                  prompt=OllamaFactory().create_chat_prompt("Give a summary of this employee's performance review \n {review}"),
+                  prompt=OllamaFactory.create_chat_prompt("Give a summary of this employee's performance review \n {review}"),
                   output_key='review_summary')
 
 chain2 = LLMChain(llm = llm, 
-                  prompt=OllamaFactory().create_chat_prompt("Identify key employee weaknesses in this review summary:\n{review_summary}"),
+                  prompt=OllamaFactory.create_chat_prompt("Identify key employee weaknesses in this review summary:\n{review_summary}"),
                   output_key='weaknesses')
 
 chain3 = LLMChain(llm = llm, 
-                  prompt=OllamaFactory().create_chat_prompt("Create a personalized plan to help address and fix these weaknesses\n{weaknesses}"),
+                  prompt=OllamaFactory.create_chat_prompt("Create a personalized plan to help address and fix these weaknesses\n{weaknesses}"),
                   output_key='final_plan')
 
 seq_chain = SequentialChain(chains = [chain1, chain2, chain3],
