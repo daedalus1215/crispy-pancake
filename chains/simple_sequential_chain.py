@@ -15,3 +15,5 @@ second_prompt = OllamaFactory.create_chat_prompt("Write a blog post using this o
 chain_two = LLMChain(llm=llm, prompt=second_prompt)
 
 full_chain = SimpleSequentialChain(chains=[chain_one, chain_two], verbose=True)
+
+result = full_chain.run('Cheesecake')
