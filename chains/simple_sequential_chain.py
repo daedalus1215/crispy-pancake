@@ -1,7 +1,7 @@
 from ollama_factory import OllamaFactory
 from langchain.chains import LLMChain, SimpleSequentialChain
 
-llm = OllamaFactory.create_llm()
+llm = OllamaFactory().create_llm()
 
 # --> topic blog post 
 # --> outline 
