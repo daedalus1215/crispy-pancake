@@ -1,6 +1,8 @@
 from ollama_factory import OllamaFactory
 from langchain.chains import LLMChain, SimpleSequentialChain
 from langchain.chains.router.multi_prompt_prompt import MULTI_PROMPT_ROUTER_TEMPLATE
+from langchain.prompts import PromptTemplate
+from langchain.chains.router.llm_router import LLMRouterChain, RouterOutputParser
 
 # Student ask Physics. We will have an llm decide if the question is advance or not.
 # Question #1: 'How does a magnet work?'
@@ -9,21 +11,36 @@ from langchain.chains.router.multi_prompt_prompt import MULTI_PROMPT_ROUTER_TEMP
 
 llm = OllamaFactory().create_llm()
 
-beginner_template = 'You are a physics teacher who is really focused on beginners and explaining complex concepts in simple to understand terms. You assume no prior knowledge. Here is your question:\n{input}'
-expert_template = 'You are a physics professor who explains physics topics to advanced audience members. You can assume anyone you answer has a PhD in Physics. Here is your question:\n{input}'
-
+# Begin to create the 2 options our LLM Router will choose from.
 prompt_infos = [
     {'name': 'beginner physics',
      'description': 'Answers basic physics questions',
-     'template': beginner_template,
+     'template': 'You are a physics teacher who is really focused on beginners and explaining complex concepts in simple to understand terms. You assume no prior knowledge. Here is your question:\n{input}',
      },
     {'name': 'advanced physics',
      'description': 'Answers advanced physics questions',
-     'template':expert_template
+     'template':'You are a physics professor who explains physics topics to advanced audience members. You can assume anyone you answer has a PhD in Physics. Here is your question:\n{input}'
      }
 ]
 
+# Load up our chain models in the required format for Langhcain.
 destination_chains = {}
 for p in prompt_infos:
     destination_chains[p['name']] = LLMChain(llm=llm, 
                                              prompt=OllamaFactory.create_chat_prompt(p['template']))
+
+# Setup the LLMChain template
+default_chain = LLMChain(llm=llm, 
+                         prompt=OllamaFactory.create_chat_prompt('{input}'))
+
+# Can look at the format required for Langchain's LLM Router.
+# print(MULTI_PROMPT_ROUTER_TEMPLATE)
+
+# Setup the strings in the routing template format
+destinations = [f"{p['name']}: {p['description']}" for p in prompt_infos]
+# print(destinations)
+destination_str = "\n".join(destinations)
+# print(destination_str)
+
+router_template = MULTI_PROMPT_ROUTER_TEMPLATE.format(destinations=destination_str)
+# print(router_template)
