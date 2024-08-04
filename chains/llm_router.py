@@ -3,6 +3,8 @@ from langchain.chains import LLMChain, SimpleSequentialChain
 from langchain.chains.router.multi_prompt_prompt import MULTI_PROMPT_ROUTER_TEMPLATE
 from langchain.prompts import PromptTemplate
 from langchain.chains.router.llm_router import LLMRouterChain, RouterOutputParser
+from langchain.chains.router import MultiPromptChain
+
 
 # Student ask Physics. We will have an llm decide if the question is advance or not.
 # Question #1: 'How does a magnet work?'
@@ -38,9 +40,20 @@ default_chain = LLMChain(llm=llm,
 
 # Setup the strings in the routing template format
 destinations = [f"{p['name']}: {p['description']}" for p in prompt_infos]
-# print(destinations)
+# print(destinations)q
 destination_str = "\n".join(destinations)
 # print(destination_str)
 
 router_template = MULTI_PROMPT_ROUTER_TEMPLATE.format(destinations=destination_str)
 # print(router_template)
+router_prompt = PromptTemplate(template=router_template,
+                               input_variables=['input'],
+                               output_parser=RouterOutputParser())
+
+router_chain = LLMRouterChain.from_llm(llm, router_prompt)
+chain = MultiPromptChain(router_chain=router_chain,
+                         destination_chains=destination_chains,
+                         default_chain=default_chain,
+                         verbose=True)
+
+chain.run()
