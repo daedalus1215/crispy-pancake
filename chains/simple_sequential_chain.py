@@ -8,12 +8,15 @@ llm = OllamaFactory().create_llm()
 # --> create blog post from outline 
 # -->  blog post text
 
-first_prompt = OllamaFactory.create_chat_prompt("Give me a simple bullet point outline for a blog post on {topic}")
-chain_one = LLMChain(llm=llm, prompt=first_prompt)
+chain_one = LLMChain(llm=llm, 
+                     prompt=OllamaFactory.create_chat_prompt("Give me a simple bullet point outline for a blog post on {topic}"))
 
-second_prompt = OllamaFactory.create_chat_prompt("Write a blog post using this outline {outline}")
-chain_two = LLMChain(llm=llm, prompt=second_prompt)
+chain_two = LLMChain(llm=llm, 
+                     prompt=OllamaFactory.create_chat_prompt("Write a blog post using this outline {outline}"))
 
-full_chain = SimpleSequentialChain(chains=[chain_one, chain_two], verbose=True)
+full_chain = SimpleSequentialChain(chains=[
+                                           chain_one, 
+                                           chain_two], 
+                                   verbose=True)
 
 result = full_chain.run('Cheesecake')
