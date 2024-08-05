@@ -56,4 +56,4 @@ chain = MultiPromptChain(router_chain=router_chain,
                          default_chain=default_chain,
                          verbose=True)
 
-chain.invoke("Please explain Feynman Diagrams")
+chain.run("What is Feynmans Diagram")
