@@ -5,3 +5,5 @@ python/env
 .venv
 data_connections/speech_new_db
 data_connections/some_new_mkultra/*
+data_connections/solution
+chains/__pycache__

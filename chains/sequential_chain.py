@@ -65,3 +65,5 @@ results = seq_chain("""
         
         Participated in code reviews and provided constructive feedback to peers
 """)
+
+print(results['final_plan'])
