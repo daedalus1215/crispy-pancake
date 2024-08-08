@@ -13,11 +13,12 @@ def transformer_fun(inputs:dict) -> dict:
     return {'output': lower_case_text}
 
 transform_chain = TransformChain(input_variables=['text'],
-                                 output_variables=['output'])
+                                 output_variables=['output'],
+                                 transform = transformer_fun)
 
 template = 'Create a one sentence summary of this review:\{review}'
 
-OllamaFactory.create_chat_prompt(template)
+prompt = OllamaFactory.create_chat_prompt(template)
 summary_chain = LLMChain(llm=llm, prompt=prompt, output_key='review_summary')
 
 sequential_chain = SimpleSequentialChain(chains=[transform_chain, summary_chain],
