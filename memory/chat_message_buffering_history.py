@@ -7,3 +7,4 @@ memory = ConversationBufferMemory()
 conversation = ConversationChain(llm = llm, memory = memory, verbose=True)
 conversation.predict(input='Hello, nice to meet you')
 
+conversation.predict(input="Tell me about an interesting physic facts")
