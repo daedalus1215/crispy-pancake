@@ -20,7 +20,7 @@ pickled_str = pickle.dumps(conversation.memory)
 with open('convo_memory.pkl', 'wb') as f:
     f.write(pickled_str)
 
-llm = OllamaFactory.create_llm()
+llm = OllamaFactory().create_llm()
 
 new_memory_loaded = pickle.loads(open('convo_memory.pkl', 'rb').read())
 reload_conversation = ConversationChain(llm=llm, memory=new_memory_loaded)
