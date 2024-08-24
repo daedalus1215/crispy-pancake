@@ -24,4 +24,4 @@ llm = OllamaFactory().create_llm()
 
 new_memory_loaded = pickle.loads(open('convo_memory.pkl', 'rb').read())
 reload_conversation = ConversationChain(llm=llm, memory=new_memory_loaded)
-print(reload_conversation.memory_buffer)
+print(reload_conversation.memory)
