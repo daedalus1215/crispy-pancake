@@ -8,3 +8,6 @@ data_connections/some_new_mkultra/*
 data_connections/solution
 chains/__pycache__
 convo_memory.pkl
+
+bin/*
+lib/*
