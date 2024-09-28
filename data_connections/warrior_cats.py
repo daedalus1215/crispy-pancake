@@ -9,6 +9,12 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler 
 from langchain.callbacks.manager import CallbackManager # type: ignore
 
 # Helper function to load PDF files and extract text
+class Document:
+    def __init__(self, page_content, metadata=None):
+        self.page_content = page_content
+        self.metadata = metadata
+
+# Helper function to load PDF files and extract text
 def load_pdfs_to_text(file_paths):
     documents = []
     for file_path in file_paths:
