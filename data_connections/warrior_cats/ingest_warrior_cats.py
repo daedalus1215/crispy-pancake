@@ -9,12 +9,6 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler 
 from langchain.callbacks.manager import CallbackManager # type: ignore
 
 # Helper function to load PDF files and extract text
-class Document:
-    def __init__(self, page_content, metadata=None):
-        self.page_content = page_content
-        self.metadata = metadata
-
-# Helper function to load PDF files and extract text
 def load_pdfs_to_text(file_paths):
     documents = []
     for file_path in file_paths:
@@ -48,22 +42,9 @@ def warrior_cat_helper(question):
     # PART THREE
     # Embed the documents into ChromaDB
     embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    db = Chroma.from_documents(docs, embedding_function, persist_directory='./warrior_cats_db')
+    db_path = './warrior_cats_db.db'
+    db = Chroma.from_documents(docs, embedding_function, persist_directory=db_path)
     db.persist()
-
-    # PART FOUR
-    # Use LLM and ContextualCompressionRetriever to return the most relevant part of the documents
-    llm = Ollama(
-        model="llama3", callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]),
-    )
-    compressor = LLMChainExtractor.from_llm(llm)
-
-    compression_retriever = ContextualCompressionRetriever(base_compressor=compressor, 
-                                                       base_retriever=db.as_retriever())
-    compressed_docs = compression_retriever.get_relevant_documents(question)
-
-    # Print the most relevant document content
-    print(compressed_docs[0].page_content)
 
 # Example usage
 warrior_cat_helper("Who shouted 'Sandpaw!'?")
